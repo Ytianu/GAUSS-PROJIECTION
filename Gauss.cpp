@@ -6,17 +6,17 @@
 
 void GaussCal( int flag,double Latitude, double Longitude, double *X, double *Y)
 {
-	//ÒÔ³àµÀÎªXÖá£¬Áã¶È×ÓÎçÏßÎªYÖá½¨Ïµ
-	double a, f, ee, et; //ÒıÈëÍÖÇò²ÎÊı
+	//ä»¥èµ¤é“ä¸ºXè½´ï¼Œé›¶åº¦å­åˆçº¿ä¸ºYè½´å»ºç³»
+	double a, f, ee, et;                                                               //å¼•å…¥æ¤­çƒå‚æ•°
 	double Latitude0, Longitude0, Latitude1, Longitude1,X0,Y0;
 	double N, T, C, A, M;
 
-	int BeltNumber = 0;                       //¾­¶È´ø´øºÅ
-	int Beltwidth = 6;                        //¶¨Òå¾­¶È´ø´ø¿í
+	int BeltNumber = 0;                                                               //ç»åº¦å¸¦å¸¦å·
+	int Beltwidth = 6;                                                                //å®šä¹‰ç»åº¦å¸¦å¸¦å®½
 	BeltNumber = (int)(Longitude / Beltwidth);
 
-	Longitude0 = (BeltNumber*Beltwidth + Beltwidth / 2)*rad;                       //ÒÔ0¶È×ÓÎçÏßÎªY
-	Latitude0 = 0*rad;                                                             //ÒÔ0¶ÈÎ³Ïß£¨³àµÀ£©ÎªXÖá
+	Longitude0 = (BeltNumber*Beltwidth + Beltwidth / 2)*rad;                          //ä»¥0åº¦å­åˆçº¿ä¸ºY
+	Latitude0 = 0*rad;                                                                 //ä»¥0åº¦çº¬çº¿ï¼ˆèµ¤é“ï¼‰ä¸ºXè½´
 	Latitude1 = Latitude*rad;
 	Longitude1 = Longitude*rad;
 
@@ -59,8 +59,10 @@ void GaussCal( int flag,double Latitude, double Longitude, double *X, double *Y)
 	*Y = Y0+M + N*tan(Latitude1)*(A*A / 2 + (5 - T + 9 * C + 4 * C*C)*A*A*A*A / 24 
 		+ (61 - 58 * T + T*T + 600 * C - 330 * et)*pow(A, 6) / 720);	
 }
-//270* C - 330 * T*C  14 * C - 58 * T*C
-//600* C - 330 * ee   72 * C - 58 * ee
+
+
+
+
 
 void GuassInvCal(int flag, double X, double Y, double *Latitude, double *Longitude)
 {
@@ -96,10 +98,10 @@ void GuassInvCal(int flag, double X, double Y, double *Latitude, double *Longitu
 	ee = 2 * f - f*f;
 	et = ee/(1.0 - ee);
 	e1 = (1.0 - sqrt(1 - ee)) / (1.0 + sqrt(1 - ee));
-	BeltNumber = (int)(X / 1000000);                                         //ÇóÈ¡¾­¶È´ø´øºÅ
-	Longitude0 = (Beltwidth*(BeltNumber-1)+Beltwidth/2)*rad;                //ÇóÈ¡ÖĞÑë¾­¶È
+	BeltNumber = (int)(X / 1000000);                                         //æ±‚å–ç»åº¦å¸¦å¸¦å·
+	Longitude0 = (Beltwidth*(BeltNumber-1)+Beltwidth/2)*rad;                 //æ±‚å–ä¸­å¤®ç»åº¦
 	Latitude0 = 0 * rad;
-	X0 = 1000000 * BeltNumber + 500000;                              //ÖĞÑë¾­Ïßºá×ø±ê
+	X0 = 1000000 * BeltNumber + 500000;                                      //ä¸­å¤®ç»çº¿æ¨ªåæ ‡
 	Y0 = 0;    
 	dx = X - X0;
 	dy = Y - Y0;
@@ -112,11 +114,13 @@ void GuassInvCal(int flag, double X, double Y, double *Latitude, double *Longitu
 	N= a / sqrt(1.0 - ee*sin(FAI)*sin(FAI));
 	R = a*(1 - ee) / sqrt((1 - ee*sin(FAI)*sin(FAI))*(1 - ee*sin(FAI)*sin(FAI))*(1 - ee*sin(FAI)*sin(FAI)));
 	D = dx / N;
-	//¼ÆËã¾­¶È(Longitude) Î³¶È(Latitude)
+	//è®¡ç®—ç»åº¦(Longitude) çº¬åº¦(Latitude)
 	Longitude1 = Longitude0 + (D - (1 + 2 * T + C)*D*D*D / 6 + (5 - 2 * C + 28 * T - 3 * C*C + 8 * et + 24 * T*T)*D*D*D*D*D / 120) / cos(FAI);
 	Latitude1 = FAI - (N*tan(FAI) / R)*(D*D / 2 - (5 + 3 * T + 10 * C - 4 * C*C - 9 * et)*D*D*D*D / 24
 		+ (61 + 90 * T + 298 * C + 45 * T*T - 256 * et - 3 * C*C)*D*D*D*D*D*D / 720);
-	//×ª»»Îª¶È
+	//è½¬æ¢ä¸ºåº¦
 	*Latitude = Latitude1*deg;
 	*Longitude = Longitude1*deg;
 }
+
+
