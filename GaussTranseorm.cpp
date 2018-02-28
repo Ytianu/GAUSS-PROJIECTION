@@ -1,4 +1,4 @@
-// GaussTranseorm.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// GaussTranseorm.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -14,4 +14,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	GuassInvCal(1, X, Y, &B1, &L1);
 	return 0;
 }
+
+
+
 
